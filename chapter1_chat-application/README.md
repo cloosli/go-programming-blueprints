@@ -1,5 +1,7 @@
 # Web Application With Web Sockets
 
+Project from the book: "Go Programming Blueprints Second Edition"
+
 ## Getting Started
 
 Adding missing modules
