@@ -4,9 +4,12 @@ import (
 	"flag"
 	"log"
 	"net/http"
+	"os"
 	"path/filepath"
 	"sync"
 	"text/template"
+
+	"gitlab.com/christian.loosli/go-programming-blueprints/chapter1_chat-application/cmd/trace"
 )
 
 // templ represents a single template
@@ -30,6 +33,7 @@ func main() {
 	flag.Parse() // parse the flags
 
 	r := newRoom()
+	r.tracer = trace.New(os.Stdout)
 
 	http.Handle("/", &templateHandler{filename: "chat.html"})
 	http.Handle("/chat", r)
