@@ -1,6 +1,8 @@
 package main
 
 import (
+	"time"
+
 	"github.com/gorilla/websocket"
 )
 
@@ -21,6 +23,7 @@ func (c *client) read() {
 		if err != nil {
 			return
 		}
+		msg = append(msg, "\t time: "+time.Now().Format(time.RFC1123)...)
 		c.room.forward <- msg
 	}
 }

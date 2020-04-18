@@ -29,9 +29,17 @@ func (r *room) run() {
 		select {
 		case client := <-r.join: // joining
 			r.clients[client] = true
+			println("client joined")
+			for otherClients := range r.clients {
+				otherClients.send <- []byte("member joined")
+			}
 		case client := <-r.leave: // leaving
 			delete(r.clients, client)
 			close(client.send)
+			println("client leaved")
+			for otherClients := range r.clients {
+				otherClients.send <- []byte("member left")
+			}
 		case msg := <-r.forward: // forward message to all clients
 			for client := range r.clients {
 				client.send <- msg
